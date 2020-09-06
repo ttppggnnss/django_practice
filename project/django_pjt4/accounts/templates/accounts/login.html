@@ -1,0 +1,11 @@
+{% extends 'base.html' %}
+{% load bootstrap4 %}
+{% block content %}
+  <h2>LOGIN</h2>
+  <form action="" method="POST">
+    {% csrf_token %}
+    {% bootstrap_form form %}
+    <button>Submit</button>
+  </form>
+  <a href="{% url 'articles:movie_index' %}">INDEX</a>
+{% endblock %}

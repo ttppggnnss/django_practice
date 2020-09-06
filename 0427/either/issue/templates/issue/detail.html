@@ -1,0 +1,38 @@
+{% extends 'base.html' %}
+{% load bootstrap4 %}
+
+{% block title %}이슈 내용{% endblock %}
+{% block content %}
+<br>
+<h1 class="text-center">A:{{ issue.nameA }} vs B:{{ issue.nameB }}</h1>
+<div class="progress" style="height:50px">
+  <div class="progress-bar progress-bar-striped bg-primary" role="progressbar" style="width: calc(100%/({{ issue.hitcountA }} + {{ issue.hitcountB }} )* {{ issue.hitcountA }}" aria-valuenow="{{ issue.hitcountA }}" aria-valuemin="0" aria-valuemax="{{ issue.hitcountA }}+{{ issue.hitcountB }}">{{ issue.hitcountA }} 명</div>
+  <div class="progress-bar progress-bar-striped bg-danger" role="progressbar" style="width: calc(100%/({{ issue.hitcountA }} + {{ issue.hitcountB }} )* {{ issue.hitcountB}}" aria-valuenow="{{ issue.hitcountB }}" aria-valuemin="0" aria-valuemax="{{ issue.hitcountA }}+{{ issue.hitcountB }}">{{ issue.hitcountB }} 명</div>
+</div>
+
+<br>
+<a class="btn btn-secondary" href="{% url 'issue:index' %}">BACK</a>
+<hr>
+<form class="radio-inline" action="{% url 'issue:reply' issue.pk %}" method="POST">
+    {% csrf_token %}
+    {% bootstrap_form form %}
+    <button class="btn btn-primary">작성</button>
+</form>
+<hr>
+{% for reply in issue.reply_set.all reversed %}
+    {% if  reply.pick == 'A' %}
+    <div class="bg-light text-primary">
+    <p class="d-inline">{{ issue.nameA }} : {{ reply.comment }}</p>
+    </div>
+    <hr>
+    {% else %}
+    <div class="bg-light text-danger">
+    <p class="d-inline">{{ issue.nameB }} : {{ reply.comment }}</p>
+    </div>
+    <hr>
+    {% endif %}
+{% empty%}
+	<p>관심과 사랑이 필요합니다 ㅠㅠ 첫번쨰 의견을 달아주세요</p>
+{% endfor %}
+
+{% endblock %}

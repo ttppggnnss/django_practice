@@ -1,0 +1,11 @@
+{% extends 'base.html' %}
+{% block content %}
+<h1>EDIT</h1>
+<form action="{% url 'articles:update' article.id %}" method="post">
+    {% csrf_token %}
+    TITLE:<input type="text" name="title" value="{{ article.title }}"><br>
+    CONTENT:<textarea name="content" rows=10>{{ article.content }}</textarea><br>
+    <button type="submit">수정</button><br>
+    <a href="{% url 'articles:detail' article.id %}">BACK</a>
+</form>
+{% endblock %}

@@ -1,0 +1,24 @@
+{% extends 'base.html' %}
+{% block content %}
+<h1>Articles</h1>
+<a class="btn btn-primary" href="{% url 'articles:create' %}">NEW</a>
+<hr>
+<table class="table">
+  <thead class="thead-light">
+    <tr>
+      <th scope="col">#</th>
+      <th scope="col">제목</th>
+      <th scope="col">작성 시간</th>
+    </tr>
+  </thead>
+  <tbody>
+   {% for article in articles reversed %}
+    <tr>
+      <th scope="row">{{ article.pk }}</th>
+      <td><a href="{% url 'articles:detail' article.id %}">{{ article.title }}</a></td>
+      <td>{{ article.created_at }}</td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+{% endblock %}

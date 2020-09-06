@@ -1,0 +1,10 @@
+<h1>accounts</h1>
+
+<!-- Q1-4 -->
+{% if user.is_authenticated %}
+<h3>{{ user.username }}</h3>
+<a href="{% url 'accounts:logout' %}">logout</a>
+{% else %}
+<a href="{% url 'accounts:signup' %}">signup</a>
+<a href="{% url 'accounts:login' %}">login</a>
+{% endif %}

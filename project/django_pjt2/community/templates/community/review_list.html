@@ -1,0 +1,42 @@
+{% extends 'base.html' %}
+{% load staticfiles %}
+{% block content %}
+<h1>Reviews</h1>
+<hr>
+<div id="carouselExampleSlidesOnly" class="carousel slide" data-ride="carousel">
+  <div class="carousel-inner">
+    <div class="carousel-item active">
+        <img src="/static/img/movieprime.png" class="d-block w-100" alt="...">
+    </div>
+    </div>
+  </div>
+</div>
+<div class="container">
+  <table class="table">
+    <thead class="thead-light">
+      <tr>
+        <th scope="col">#</th>
+        <th scope="col">영화</th>
+        <th scope="col">평점</th>
+        <th scope="col">제목</th>
+        <th scope="col">조회수</th>
+        <th scope="col">작성자</th>
+        <th scope="col">작성 시간</th>
+      </tr>
+    </thead>
+    <tbody>
+     {% for review in reviews reversed %}
+      <tr>
+        <td scope="row">{{ review.pk }}</td>
+        <td scope="row">{{ review.movie_title }}</td>
+        <td scope="row"><span class="badge badge-warning">{{ review.rank }}</span></td>
+        <td scope="row"><a class="btn btn-info" href="{% url 'community:detail' review.id %}">{{ review.title }}</a></td>
+        <td scope="row">{{ review.hitcount }}</td>
+        <td scope="row">{{ review.reviewer }}</td>
+        <td scope="row">{{ review.created_at }}</td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+{% endblock %}

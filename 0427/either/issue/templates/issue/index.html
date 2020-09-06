@@ -1,0 +1,35 @@
+{% extends 'base.html' %}
+{% load staticfiles %}
+{% block title %}이슈 목록{% endblock %}
+{% block content %}
+<h1>Issues</h1>
+<hr>
+<div id="carouselExampleSlidesOnly" class="carousel slide" data-ride="carousel">
+  <div class="carousel-inner">
+    <div class="carousel-item active">
+        <!--<img src="/static/img/.png" class="d-block w-100" alt="...">-->
+    </div>
+    </div>
+  </div>
+</div>
+<div class="container text-center">
+  <table class="table">
+    <thead class="thead-light">
+      <tr>
+        <th scope="col">#</th>
+        <th scope="col">제목</th>
+        <th scope="col">A vs B</th>
+      </tr>
+    </thead>
+    <tbody>
+     {% for issue in issues %}
+      <tr>
+        <td scope="row">{{ forloop.revcounter }}</td>
+        <td scope="row"><a class="btn btn-info" href="{% url 'issue:detail' issue.id %}">{{ issue.nameA }} vs {{ issue.nameB }}</a></td>
+        <td scope="row">{{ issue.hitcountA }} vs {{ issue.hitcountB }}</td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+{% endblock %}

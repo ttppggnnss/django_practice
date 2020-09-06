@@ -1,0 +1,39 @@
+{% extends 'base.html' %}
+{% load staticfiles %}
+{% block title %}리뷰 목록{% endblock %}
+{% block content %}
+<h1>Reviews</h1>
+<hr>
+<a class="btn btn-primary" href="{% url 'articles:create' movie.pk %}">글쓰기</a>
+<hr>
+<div class="container">
+  <table class="table">
+    <thead class="thead-light">
+      <tr>
+        <th scope="col">#</th>
+        <th scope="col">영화</th>
+        <th scope="col">평점</th>
+        <th scope="col">제목</th>
+        <th scope="col">조회수</th>
+        <th scope="col">좋아요</th>
+        <th scope="col">작성자</th>
+        <th scope="col">작성 시간</th>
+      </tr>
+    </thead>
+    <tbody>
+     {% for review in movie.reviews.all reversed%}
+      <tr>
+        <td scope="row">{{ forloop.counter }}</td>
+        <td scope="row">{{ movie.movie_title }}</td>
+        <td scope="row"><span class="badge badge-warning">{{ review.rank }}</span></td>
+        <td scope="row"><a class="btn btn-info" href="{% url 'articles:review_detail' movie.pk review.pk %}">{{ review.title }}</a></td>
+        <td scope="row">{{ review.hitcount }}</td>
+        <td scope="row">{{ review.like_users.count }}</td>
+        <td scope="row"><a class="btn btn-info" href="{% url 'accounts:profile' review.user.username %}">{{ review.user.username }}</a></td>
+        <td scope="row">{{ review.created_at }}</td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+{% endblock %}

@@ -1,0 +1,11 @@
+{% extends 'base.html' %}
+{% load bootstrap4 %}
+{% block content %}
+<h1>EDIT</h1>
+<form action="" method="post">
+    {% csrf_token %}
+    {% bootstrap_form form %}
+    <button class="btn btn-primary" type="submit">수정</button><br>
+    <a class="btn btn-secondary" href="{% url 'articles:detail' article.id %}">BACK</a>
+</form>
+{% endblock %}

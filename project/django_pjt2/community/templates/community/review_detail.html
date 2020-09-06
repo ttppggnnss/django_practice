@@ -1,0 +1,80 @@
+{% extends 'base.html' %}
+{% block content %}
+<h1>DETAIL</h1>
+<hr>
+<p>제목: {{ review.title }}</p>
+<p>작성자: {{ review.reviewer }}</p>
+<p>{{ review.content }}</p>
+<p>생성시각: {{ review.created_at }}</p>
+<p>수정시각: {{ review.updated_at }}</p>
+<input class="d-none" id="password_check" value="{{ review.password }}">
+<a class="btn btn-primary" href="" data-toggle="modal" data-target="#staticBackdrop1">EDIT</a>
+     <!-- Modal -->
+    <div class="modal fade" id="staticBackdrop1" data-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="staticBackdropLabel">Modal title</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <P>정말로 수정하시려면 비밀번호를 입력하세요</P>
+            <input type="password" id="password1">
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">CANCEL</button>
+            <a href="{% url 'community:update' review.id %}" class="btn btn-primary" onclick="return che3ck1()">EDIT</a>
+          </div>
+        </div>
+      </div>
+    </div>
+    <script type="text/javascript">
+        function check1() {
+            if ($('#password1').val()==$('#password_check').val()){
+                return true;
+            } else{
+                alert("비밀번호를 정확히 입력해주세요");
+                return false;
+            }
+        }
+    </script>
+<a class="btn btn-danger" href="" data-toggle="modal" data-target="#staticBackdrop2">DELETE</a><br>
+    <!-- Modal -->
+    <div class="modal fade" id="staticBackdrop2" data-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="staticBackdropLabel">Modal title</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <P>정말로 삭제하시려면 비밀번호를 입력하세요</P>
+            <input type="password" id="password2">
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">CANCEL</button>
+            <form action="{% url 'community:delete' review.id %}" method="POST">
+                {% csrf_token %}
+                <button class="btn btn-danger" onclick="return check2()">DELETE</button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+    <script type="text/javascript">
+        function check2() {
+            if ($('#password2').val()==$('#password_check').val()){
+                alert("리뷰가 삭제되었습니다!");
+                return true;
+            } else{
+                alert("비밀번호를 정확히 입력해주세요");
+                return false;
+            }
+        }
+    </script>
+<a class="btn btn-secondary" href="{% url 'community:index' %}">BACK</a>
+{% endblock %}

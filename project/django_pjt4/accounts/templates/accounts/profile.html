@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+{% load bootstrap4 %}
+{% block content %}
+    <h2>{{ user.username }} 님의 프로필 페이지입니다</h2>
+    {% if request.user != user %}
+        {% if request.user in user.followers.all %}
+            <a class="btn btn-info" href="{% url 'accounts:follow' user.username %}">팔로우 취소</a>
+        {% else %}
+            <a class="btn btn-info" href="{% url 'accounts:follow' user.username %}">팔로우</a>
+        {% endif %}
+    {% endif %}
+<p> {{ user.followers.count }}명이 팔로우하고 있습니다.</p>
+{% for followeruser in user.followers.all %}
+<p>{{ followeruser.username }}</p>
+{% endfor %}
+<p> {{ user.followings.count }}명을 {{ user.username }}가 팔로우하고 있습니다.</p>
+{% for followinguser in user.followings.all %}
+<p>{{ followinguser.username }}</p>
+{% endfor %}
+<hr>
+{% endblock %}

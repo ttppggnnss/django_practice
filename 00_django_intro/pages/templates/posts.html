@@ -1,0 +1,38 @@
+{% extends 'base.html' %}
+{% block css %}
+<style>
+    h1{
+        color : blue;
+    }
+</style>
+{% endblock%}
+{% block body %}
+    {# 주석 #}
+    <h1>POSTS</h1>
+    <h2>post number : {{number}}</h2>
+    <ul>
+    {% for reply in replies %}
+        <li>{{reply}}</li>
+    {% endfor%}
+    </ul>
+    <ul>
+    {% for reply in replies %}
+        <li> 댓글 {{ forloop.counter }} : {{reply}}</li>
+    {% endfor%}
+    </ul>
+    <ul>
+    {% for reply in no_replies %}
+        <li>댓글 {{forloop.counter}}: {{reply}} </li>
+        {%empty%}
+        <p>댓글이 없어요! 작성해주세요. ㅠ_ㅠ</p>
+    {% endfor %}
+    </ul>
+    {% if user == 'admin' %}
+        <p>수정, 삭제</p>
+    {% else %}
+        <p>관리자 권한이 없습니다.</p>
+    {%endif%}
+    <h3>{{content}}</h3>
+    <h3>{{content|length}}</h3>
+    <p>{# 주석 #}{{content|truncatechars:10}}</p>
+{% endblock%}

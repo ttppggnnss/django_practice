@@ -1,0 +1,32 @@
+{% extends 'base.html' %}
+{% load bootstrap4 %}
+
+{% block title %}글 세부내용{% endblock %}
+{% block content %}
+<h1>DETAIL</h1>
+<hr>
+<p>제목: {{ review.title }}</p>
+<p>내용: {{ review.content }}</p>
+<p>생성시각: {{ review.created_at }}</p>
+<p>수정시각: {{ review.updated_at }}</p>
+{% if request.user == review.user %}
+<a class="btn btn-primary" href="{% url 'community:update' review.pk %}">EDIT</a>
+<a class="btn btn-danger" href="{% url 'community:delete' review.pk %}">DELETE</a>
+{% endif %}
+<br>
+<a class="btn btn-secondary" href="{% url 'community:index' %}">BACK</a>
+<hr>
+<form class="d-flex" action="{% url 'community:c_create' review.pk %}" method="POST">
+    {% csrf_token %}
+    {% bootstrap_form form %}
+    <button class="btn btn-primary">작성</button>
+</form>
+<hr>
+{% for comment in review.comment_set.all reversed %}
+    <p class="d-inline">{{ forloop.revcounter }} : {{ comment.content }}{% if request.user == comment.user %}<form class="d-inline" action="{% url 'community:c_delete' review.id comment.id %}" method="post">{% csrf_token %}<button class="btn btn-danger">삭제</button></form>{% endif %}</p>
+    <hr>
+{% empty%}
+	<p>관심과 사랑이 필요합니다 ㅠㅠ 첫번쨰 댓글을 달아주세요</p>
+{% endfor %}
+
+{% endblock %}

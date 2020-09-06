@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+{% load staticfiles %}
+{% block title %}영화 목록{% endblock %}
+{% block content %}
+<h1>Movies</h1>
+<hr>
+{% for movie in movies %}
+<div class="card" style="width: 18rem;">
+  <img src="{{ movie.movie_poster }}" class="card-img-top" alt="movie poster">
+  <div class="card-body">
+    <h5 class="card-title">{{ movie.movie_title }}</h5>
+    <a href="{% url 'articles:reviews_index' movie.pk %}" class="btn btn-primary">Reviews</a>
+  </div>
+</div>
+{% endfor %}
+{% endblock %}

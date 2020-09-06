@@ -1,0 +1,50 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="row">
+
+<table class="table">
+    <thead>
+        <tr>
+          <th scope="col">#</th>
+          <th scope="col">제목</th>
+          <th scope="col">작성시간</th>
+          <th scope="col">수정시간</th>
+        </tr>
+    </thead>
+    <tbody>
+    {% for article in articles reversed %}
+        <tr>
+          <td scope="col">{{ forloop.revcounter }}</th>
+          <td scope="col"><a href="/articles/detail/{{article.id}}">{{article.title}}</a></th>
+          <td scope="col">{{article.created_at}}</th>
+          <td scope="col">{{article.updated_at}}</th>
+        </tr>
+    {% endfor %}
+    </tbody>
+</table>
+</div>
+<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
+  글쓰기
+</button>
+<!-- Modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <form action="/articles/complete/" class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">글쓰기</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <input class="w-100" type="text" name="title" placeholder="제목" autofocus>
+        <textarea class="w-100" type="text" name="content" placeholder="내용"></textarea>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">취소</button>
+        <button type="submit" class="btn btn-primary">글쓰기</button>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

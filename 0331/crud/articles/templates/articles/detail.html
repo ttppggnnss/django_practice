@@ -1,0 +1,10 @@
+{% extends 'base.html' %}
+{% block content %}
+  <h1>{{article.title}}</h1>
+  <hr>
+  <h2>{{article.content}}</h2>
+  <hr>
+  <h6>{{article.created_at}}</h6>
+  <h6>{{article.updated_at}}</h6>
+  <a href="/articles/community/" class="btn btn-primary">목록으로</a>
+{% endblock %}

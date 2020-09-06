@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+{% load bootstrap4 %}
+{% block title %}리뷰 작성{% endblock %}
+{% block content %}
+    {% if request.resolver_match.url_name == 'update' %}
+        <h1>EDIT</h1>
+        <form action="" method="post">
+            {% csrf_token %}
+            {% bootstrap_form form %}
+            <button class="btn btn-primary" type="submit">수정</button><br>
+            <a class="btn btn-secondary" href="{% url 'articles:review_detail' movie.pk review.pk %}">BACK</a>
+        </form>
+    {% else %}
+        <h1>NEW</h1>
+        <form action="" method="post">
+            {% csrf_token %}
+            {% bootstrap_form form %}
+            <button class="btn btn-primary" type="submit">작성</button><br>
+            <a class="btn btn-secondary" href="{% url 'articles:reviews_index' movie.pk %}">BACK</a>
+        </form>
+    {% endif %}
+{% endblock %}

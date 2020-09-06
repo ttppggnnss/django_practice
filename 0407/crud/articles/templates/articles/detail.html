@@ -1,0 +1,13 @@
+{% extends 'base.html' %}
+{% block content %}
+<h1>DETAIL</h1>
+<hr>
+<h2>글 번호: {{ article.pk }}</h2>
+<h2>글 제목: {{ article.title }}</h2>
+<p>글 내용: {{ article.content }}</p>
+<p>글 생성시각: {{ article.created_at }}</p>
+<p>글 수정시각: {{ article.updated_at }}</p>
+<a class="btn btn-primary" href="{% url 'articles:update' article.id %}">EDIT</a>
+<a class="btn btn-danger" href="{% url 'articles:delete' article.id %}">DELETE</a><br>
+<a class="btn btn-secondary" href="{% url 'articles:index' %}">BACK</a>
+{% endblock %}

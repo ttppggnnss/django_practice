@@ -1,0 +1,25 @@
+<h1>Reservation</h1>
+<div class="dropdown">
+  <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+    Dropdown button
+  </button>
+  <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+    <a class="dropdown-item" href="#">Action</a>
+    <a class="dropdown-item" href="#">Another action</a>
+    <a class="dropdown-item" href="#">Something else here</a>
+  </div>
+</div>
+<a href="{% url 'reservations:create' %}">create</a>
+<hr>
+
+{% for reservation in reservations %}
+    {% if reservation.personnel > 5 %}
+        <p>{{ reservation.date | date:"Y년 m월 d일" }}</p>
+        <p>{{ reservation.personnel }}</p>
+        <p>{{ reservation.location }}</p>
+    {% else %}
+        <li>{{ reservation.date | date:"Y년 m월 d일" }}</li>
+        <li>{{ reservation.personnel }}</li>
+        <li>{{ reservation.location }}</li>
+    {% endif %}
+{% endfor %}

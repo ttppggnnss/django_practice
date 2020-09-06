@@ -1,0 +1,44 @@
+{% extends 'base.html' %}
+{% load bootstrap4 %}
+
+{% block title %}리뷰{% endblock %}
+{% block content %}
+<h1>DETAIL</h1>
+<hr>
+<p>영화제목: {{ movie.movie_title }}</p>
+<p>제목: {{ review.title }}</p>
+<p>내용: {{ review.content }}</p>
+<p>수정시각: {{ review.updated_at }}</p>
+{% if request.user == review.user %}
+<a class="btn btn-primary" href="{% url 'articles:update' movie.pk review.pk %}">EDIT</a>
+<a class="btn btn-danger" href="{% url 'articles:delete' movie.pk review.pk %}">DELETE</a>
+{% endif %}
+<br>
+<a class="btn btn-secondary" href="{% url 'articles:reviews_index' movie.pk%}">BACK</a>
+<hr>
+    {% with review_like_users=review.like_users.all %}
+        {% if request.user in review_like_users %}
+        <a href="{% url 'articles:like' movie.pk review.pk %}">
+            <i class="fas fa-heart fa-lg animated delay-1s" style="color: red;"></i>
+        </a>
+        {% else %}
+        <a href="{% url 'articles:like' movie.pk review.pk %}">
+            <i class="far fa-heart fa-lg animated infinite bounce delay-1s" style="color: gray;"></i>
+        </a>
+        {% endif %}
+        <p>{{ review_like_users|length }}명이 좋아합니다.</p>
+    {% endwith %}
+<hr>
+<form action="{% url 'articles:c_comment' movie.pk review.pk %}" method="POST">
+    {% csrf_token %}
+    {% bootstrap_form form %}
+    <button class="btn btn-primary">작성</button>
+</form>
+<hr>
+{% for comment in review.comments.all reversed %}
+    <p class="d-inline">{{ forloop.revcounter }} : {{ comment.content }}{% if request.user == comment.user %}<form class="d-inline" action="{% url 'articles:d_comment' movie.pk review.pk comment.pk %}" method="post">{% csrf_token %}<button class="btn btn-danger">삭제</button></form>{% endif %}</p>
+    <hr>
+{% empty%}
+	<p>관심과 사랑이 필요합니다 ㅠㅠ 첫번쨰 댓글을 달아주세요</p>
+{% endfor %}
+{% endblock %}
